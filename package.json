@@ -1,0 +1,29 @@
+{
+  "name": "nftrees",
+  "version": "1.0.0",
+  "description": "Based on my idea regarding compensating the nature when minting NFTs which is explained in more detail here: https://github.com/levskarcheto96/-Awareness-Bounty-NFTrees",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^0.1.7",
+    "@openzeppelin/contracts": "^4.0.0",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metodi96/nftrees.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/metodi96/nftrees/issues"
+  },
+  "homepage": "https://github.com/metodi96/nftrees#readme"
+}
