@@ -18,7 +18,6 @@ const getWeb3 = async () => {
          */
 
         const provider = new Web3.providers.HttpProvider(
-            // 'https://rinkeby.infura.io/v3/ad6c5b3aa2854ff2845f842c4e308077'
             'http://127.0.0.1:7545'
         );
 

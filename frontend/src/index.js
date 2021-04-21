@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './App';
+import getWeb3 from './web3-config';
+import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+//inject web3 into the App.js
+getWeb3().then(web3 => {
+  ReactDOM.render(
+    <BrowserRouter>
+      <App web3={web3} />
+    </BrowserRouter>,
+    document.getElementById('root')
+  );
+});
 
 
