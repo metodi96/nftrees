@@ -13,11 +13,22 @@ contract Collectible is ERC721, Ownable {
     Counters.Counter private tokenIds;
     address public owner;
 
+    struct TopTenDonation {
+        uint256 donation;
+        address donator;
+    }
+    TopTenDonation[10] public topTenDonations;
+
     mapping(address => bool) isAnEligibleNonProfitOrganization;
+
+    //used to keep track of how much eth has been donated by a wallet address
     mapping(address => uint256) totalDonations;
+
     mapping(string => bool) hasBeenMinted;
 
-    event Donated(address recipient, uint256 amount, uint256 total);
+    event Donated(address from, address recipient, uint256 amount);
+    event Authorized(address recipient);
+    event Unauthorized(address recipient);
 
     constructor() public ERC721("NFTreeCollectible", "NFTC") {
         owner = msg.sender;
@@ -44,15 +55,16 @@ contract Collectible is ERC721, Ownable {
         //send to non-profit organization
         (bool sent, bytes memory data) = recipient.call{value: msg.value}("");
         require(sent, "Failed to send Ether");
-        totalDonations[recipient] = totalDonations[recipient] + msg.value;
+        totalDonations[msg.sender] = totalDonations[msg.sender] + msg.value;
 
         hasBeenMinted[ipfsHash] = true;
         tokenIds.increment();
         uint256 newItemId = tokenIds.current();
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, metadata);
+        checkDonatorForTopTen(msg.sender);
 
-        emit Donated(recipient, msg.value, totalDonations[recipient]);
+        emit Donated(msg.sender, recipient, msg.value);
 
         return newItemId;
     }
@@ -63,6 +75,7 @@ contract Collectible is ERC721, Ownable {
             "Recipient has already been authorized."
         );
         isAnEligibleNonProfitOrganization[recipient] = true;
+        emit Authorized(recipient);
     }
 
     function unauthorizeRecipient(address recipient) external onlyOwner {
@@ -71,5 +84,29 @@ contract Collectible is ERC721, Ownable {
             "Recipient has to be authorized."
         );
         isAnEligibleNonProfitOrganization[recipient] = false;
+        emit Unauthorized(recipient);
+    }
+
+    function checkDonatorForTopTen(address donator)
+        private
+    {
+        //get index of the current max element
+        uint256 i = 0;
+        bool isToBeUpdated = false;
+        for (i; i < topTenDonations.length; i++) {
+            if (topTenDonations[i].donation < totalDonations[donator]) {
+                isToBeUpdated = true;
+                break;
+            }
+        }
+        if (isToBeUpdated) {
+            for (uint256 j = topTenDonations.length - 1; j > i; j--) {
+                topTenDonations[j].donation = topTenDonations[j - 1].donation;
+                topTenDonations[j].donator = topTenDonations[j - 1].donator;
+            }
+
+            topTenDonations[i].donation = totalDonations[donator];
+            topTenDonations[i].donator = donator;
+        }
     }
 }
