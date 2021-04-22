@@ -35,7 +35,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className='border-b-2 border-color-gray-500'>
+        <div className='shadow-md'>
             <nav className="bg-white">
                 <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                     <div className="relative flex items-center justify-between h-20">
@@ -57,9 +57,9 @@ const Navbar = () => {
                             </div>
                             <div className="hidden sm:block sm:ml-6">
                                 <div className="flex space-x-4 my-2">
-                                    <CustomNavLink content='Explore' path='/' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
-                                    <CustomNavLink content='My Items' path='/my-items' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
-                                    <CustomNavLink content='About' path='/about' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
+                                    <CustomNavLink content='Explore' path='/' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
+                                    <CustomNavLink content='Create' path='/create' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
+                                    <CustomNavLink content='About' path='/about' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
                                 </div>
                             </div>
                         </div>
@@ -75,7 +75,7 @@ const Navbar = () => {
                 <div className="sm:hidden" id="mobile-menu">
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         <CustomNavLink content='Explore' path='/' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
-                        <CustomNavLink content='My Items' path='/my-items' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
+                        <CustomNavLink content='Create' path='/create' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
                         <CustomNavLink content='About' path='/about' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
                     </div>
                 </div>

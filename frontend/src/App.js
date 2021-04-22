@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar'
 import AppContext from './appContext';
 import Footer from './components/Footer';
+import { Switch, Route } from 'react-router-dom';
+import About from './pages/About'
+import Create from './pages/Create'
+import Explore from './pages/Explore'
 
 function App({ web3 }) {
 
@@ -56,6 +60,11 @@ function App({ web3 }) {
     >
       <div className='cursive flex flex-col h-screen justify-between'>
         <Navbar />
+        <Switch>
+          <Route path='/' exact component={Explore} />
+          <Route path='/create' exact component={Create} />
+          <Route path='/about' exact component={About} />
+        </Switch>
         <Footer />
       </div>
     </AppContext.Provider>
