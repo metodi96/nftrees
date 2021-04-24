@@ -1,38 +1,33 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.6;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Collectible is ERC721, Ownable {
-    using SafeMath for uint256;
+contract GreenCollectible is ERC721, Ownable {
     using Counters for Counters.Counter;
 
     uint256 public donationAmount;
     Counters.Counter private tokenIds;
-    address public owner;
 
     struct TopTenDonation {
-        uint256 donation;
         address donator;
+        uint256 totalDonationsByDonator;
     }
-    TopTenDonation[10] public topTenDonations;
+    TopTenDonation[10] private topTenDonations;
 
-    mapping(address => bool) isAnEligibleNonProfitOrganization;
-
+    mapping(uint256 => string) private _tokenURIs;
+    mapping(address => bool) public isAnEligibleNonProfitOrganization;
     //used to keep track of how much eth has been donated by a wallet address
-    mapping(address => uint256) totalDonations;
+    mapping(address => uint256) public totalDonations;
+    mapping(string => bool) public hasBeenMinted;
 
-    mapping(string => bool) hasBeenMinted;
-
-    event Donated(address from, address recipient, uint256 amount);
+    event Donated(address from, address to, uint256 amount);
     event Authorized(address recipient);
     event Unauthorized(address recipient);
 
-    constructor() public ERC721("NFTreeCollectible", "NFTC") {
-        owner = msg.sender;
-    }
+    constructor() ERC721("NFTreeCollectible", "NFTC") {}
 
     function createCollectibleAndDonate(
         string memory ipfsHash,
@@ -53,7 +48,7 @@ contract Collectible is ERC721, Ownable {
         );
 
         //send to non-profit organization
-        (bool sent, bytes memory data) = recipient.call{value: msg.value}("");
+        (bool sent, ) = recipient.call{value: msg.value}("");
         require(sent, "Failed to send Ether");
         totalDonations[msg.sender] = totalDonations[msg.sender] + msg.value;
 
@@ -87,26 +82,45 @@ contract Collectible is ERC721, Ownable {
         emit Unauthorized(recipient);
     }
 
-    function checkDonatorForTopTen(address donator)
-        private
-    {
+    function checkDonatorForTopTen(address donator) private {
         //get index of the current max element
         uint256 i = 0;
         bool isToBeUpdated = false;
         for (i; i < topTenDonations.length; i++) {
-            if (topTenDonations[i].donation < totalDonations[donator]) {
+            if (topTenDonations[i].totalDonationsByDonator < totalDonations[donator]) {
                 isToBeUpdated = true;
                 break;
             }
         }
         if (isToBeUpdated) {
             for (uint256 j = topTenDonations.length - 1; j > i; j--) {
-                topTenDonations[j].donation = topTenDonations[j - 1].donation;
                 topTenDonations[j].donator = topTenDonations[j - 1].donator;
+                topTenDonations[j].totalDonationsByDonator = topTenDonations[j - 1].totalDonationsByDonator;  
             }
-
-            topTenDonations[i].donation = totalDonations[donator];
             topTenDonations[i].donator = donator;
+            topTenDonations[i].totalDonationsByDonator = totalDonations[donator]; 
         }
+    }
+
+    function _setTokenURI(uint256 tokenId, string memory _tokenURI)
+        internal
+        virtual
+    {
+        require(
+            _exists(tokenId),
+            "ERC721Metadata: URI set of nonexistent token"
+        );
+        _tokenURIs[tokenId] = _tokenURI;
+    }
+
+    function getTopTenDonation(uint256 id)
+        public
+        view
+        returns (address donator, uint256 totalDonationsByDonator)
+    {
+        return (
+            topTenDonations[id].donator,
+            topTenDonations[id].totalDonationsByDonator
+        );
     }
 }
