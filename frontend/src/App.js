@@ -9,6 +9,7 @@ import Explore from './pages/Explore'
 import {
   getGreenCollectibleContractInstance
 } from './utils/contracts'
+import { fetchConversionRate } from './utils/conversionRate';
 
 function App({ web3 }) {
 
@@ -18,6 +19,12 @@ function App({ web3 }) {
   const [hasAccountChanged, setHasAccountChanged] = useState(false);
   const [screenBlocked, setScreenBlocked] = useState(false);
   const [greenCollectibleContract, setGreenCollectibleContract] = useState(undefined)
+
+  useEffect(() => {
+    setInterval(() => {
+      fetchConversionRate();
+    }, 1000 * 60 * 15);
+  }, []);
 
   useEffect(() => {
     const init = async () => {
@@ -45,7 +52,7 @@ function App({ web3 }) {
   useEffect(() => {
     const greenCollectibleContract = getGreenCollectibleContractInstance(web3)
     setGreenCollectibleContract(greenCollectibleContract)
-}, [web3])
+  }, [web3])
 
   const handleBlockScreen = (blocked) => {
     setScreenBlocked(blocked);
