@@ -16,8 +16,8 @@ const Footer = () => {
                 <div className="p-5 w-48 ">
                     <div className="text-xs uppercase text-white font-medium">Contact us</div>
                     <hr />
-                    <span className="my-3 block" href="/#">NFTrees Inc, Street, Country <span className="text-whitetext-xs p-1"></span></span>
-                    <a className="my-3 block" href="/#">contact@company.com <span className="text-whitetext-xs p-1"></span></a>
+                    <span className="my-3 block" href="/">NFTrees Inc, Street, Country <span className="text-whitetext-xs p-1"></span></span>
+                    <a className="my-3 block" href="/">contact@company.com <span className="text-whitetext-xs p-1"></span></a>
                 </div>
             </div>
         </div>

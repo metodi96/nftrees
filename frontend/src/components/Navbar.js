@@ -4,11 +4,11 @@ import AppContext from '../appContext'
 import { handleConnect, handleInstall } from '../utils/metamask'
 
 const Navbar = () => {
-    const { account, hasWalletAddress } = useContext(AppContext);
+    const { account, hasWalletAddressAfterChange } = useContext(AppContext);
 
     const renderMetaMaskLabel = () => {
         if (window.ethereum) {
-            return !hasWalletAddress && !account ?
+            return !hasWalletAddressAfterChange && !account ?
                 <button type="button" onClick={handleConnect} className="bg-transparent flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                     <span className="sr-only">Open user menu</span>
                     <img className="h-8 w-8 rounded-full" src="metamask.png" alt="metamask-icon" />
@@ -52,8 +52,8 @@ const Navbar = () => {
                         </div>
                         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                             <div className="flex-shrink-0 flex items-center">
-                                <img className="block lg:hidden h-16 w-auto" src="logo.png" alt="NFTrees Logo" />
-                                <img className="hidden lg:block h-16 w-auto" src="logo.png" alt="NFTrees Logo" />
+                            <a className="block lg:hidden" href="/" rel='noreferrer'><img className="h-16 w-auto" src="logo.png" alt="NFTrees Logo" /></a>
+                            <a className="hidden lg:block" href="/" rel='noreferrer'><img className="h-16 w-auto" src="logo.png" alt="NFTrees Logo" /></a>
                             </div>
                             <div className="hidden sm:block sm:ml-6">
                                 <div className="flex space-x-4 my-2">
@@ -82,8 +82,8 @@ const Navbar = () => {
 
             </nav>
             {/*<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#065f46" fillOpacity="1" d="M0,96L60,85.3C120,75,240,53,360,64C480,75,600,117,720,160C840,203,960,245,1080,266.7C1200,288,1320,288,1380,288L1440,288L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
-    </svg>*/}
+                    <path fill="#065f46" fillOpacity="1" d="M0,96L60,85.3C120,75,240,53,360,64C480,75,600,117,720,160C840,203,960,245,1080,266.7C1200,288,1320,288,1380,288L1440,288L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
+                </svg>*/}
         </div>
     )
 }

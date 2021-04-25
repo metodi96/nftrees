@@ -6,14 +6,18 @@ import { Switch, Route } from 'react-router-dom';
 import About from './pages/About'
 import Create from './pages/Create'
 import Explore from './pages/Explore'
+import {
+  getGreenCollectibleContractInstance
+} from './utils/contracts'
 
 function App({ web3 }) {
 
   const [account, setAccount] = useState('');
   const [networkId, setNetworkId] = useState('');
-  const [hasWalletAddress, setHasWalletAddress] = useState(false);
+  const [hasWalletAddressAfterChange, setHasWalletAddressAfterChange] = useState(false);
   const [hasAccountChanged, setHasAccountChanged] = useState(false);
   const [screenBlocked, setScreenBlocked] = useState(false);
+  const [greenCollectibleContract, setGreenCollectibleContract] = useState(undefined)
 
   useEffect(() => {
     const init = async () => {
@@ -26,9 +30,9 @@ function App({ web3 }) {
           console.log('Account changed...')
           setHasAccountChanged(true);
           if (!accounts[0]) {
-            setHasWalletAddress(false);
+            setHasWalletAddressAfterChange(false);
           } else {
-            setHasWalletAddress(true);
+            setHasWalletAddressAfterChange(true);
             setAccount(accounts[0]);
           }
         });
@@ -37,6 +41,11 @@ function App({ web3 }) {
     };
     init();
   }, [web3.utils, web3.eth]);
+
+  useEffect(() => {
+    const greenCollectibleContract = getGreenCollectibleContractInstance(web3)
+    setGreenCollectibleContract(greenCollectibleContract)
+}, [web3])
 
   const handleBlockScreen = (blocked) => {
     setScreenBlocked(blocked);
@@ -52,10 +61,11 @@ function App({ web3 }) {
       handleBlockScreen,
       screenBlocked,
       account,
-      hasWalletAddress,
+      hasWalletAddressAfterChange,
       hasAccountChanged,
       handleAccountChanged,
-      networkId
+      networkId,
+      greenCollectibleContract
     }}
     >
       <div className='cursive flex flex-col h-screen justify-between'>
