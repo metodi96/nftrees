@@ -30,7 +30,6 @@ contract GreenCollectible is ERC721, Ownable {
     constructor() ERC721("NFTreeCollectible", "NFTC") {}
 
     function createCollectibleAndDonate(
-        string memory ipfsHash,
         string memory metadata,
         address payable recipient
     ) public payable returns (uint256) {
@@ -43,7 +42,7 @@ contract GreenCollectible is ERC721, Ownable {
             "You are sending eth to a recipient that is not part of the list of eligible recipients."
         );
         require(
-            !hasBeenMinted[ipfsHash],
+            !hasBeenMinted[metadata],
             "This IPFS hash has already been used to mint an NFT!"
         );
 
@@ -52,7 +51,7 @@ contract GreenCollectible is ERC721, Ownable {
         require(sent, "Failed to send Ether");
         totalDonations[msg.sender] = totalDonations[msg.sender] + msg.value;
 
-        hasBeenMinted[ipfsHash] = true;
+        hasBeenMinted[metadata] = true;
         tokenIds.increment();
         uint256 newItemId = tokenIds.current();
         _mint(msg.sender, newItemId);

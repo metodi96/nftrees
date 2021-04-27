@@ -59,6 +59,7 @@ const Navbar = () => {
                                 <div className="flex space-x-4 my-2">
                                     <CustomNavLink content='Explore' path='/' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
                                     <CustomNavLink content='Create' path='/create' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
+                                    <CustomNavLink content='My Items' path='/my-items' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
                                     <CustomNavLink content='About' path='/about' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
                                 </div>
                             </div>
@@ -76,6 +77,7 @@ const Navbar = () => {
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         <CustomNavLink content='Explore' path='/' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
                         <CustomNavLink content='Create' path='/create' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
+                        <CustomNavLink content='My Items' path='/my-items' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
                         <CustomNavLink content='About' path='/about' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
                     </div>
                 </div>

@@ -1,17 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ImagePicker from '../elements/ImagePicker'
 import DonationInput from '../elements/DonationInput'
 import GeneralInformation from '../components/GeneralInformation'
 import { checkIsValidFile, checkIsValidDonation, checkIsValidName } from '../utils/validation'
 import ipfs from '../utils/ipfs'
+import { convertToBase32 } from '../utils/ipfsUtils'
+import AppContext from '../appContext'
+import { toast } from 'react-toastify';
+import { useHistory } from "react-router-dom";
+import Dropdown from '../elements/Dropdown'
 
 const MintingSection = () => {
-    const [selectedFile, setSelectedFile] = useState({ src: '', alt: '', buffer: '' });
+    const { greenCollectibleContract, account } = useContext(AppContext)
+    const [selectedFile, setSelectedFile] = useState({ src: '', alt: '', file: '' });
     const [donation, setDonation] = useState(0.001)
+    const [chosenOrganization, setChosenOrganization] = useState(
+        { name: 'One Tree Planted', address: '0x36b0bCa3ccA85e8ac16195c47735e717dD1fB47A' }
+    )
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [disabled, setDisabled] = useState(true)
     const [submitted, setSubmitted] = useState(false)
+
+    let history = useHistory();
 
     useEffect(() => {
         if ((checkIsValidName(name) && checkIsValidDonation(donation) && checkIsValidFile(selectedFile)) || !submitted) {
@@ -24,16 +35,11 @@ const MintingSection = () => {
     //https://dev.to/yosraskhiri/make-an-image-preview-in-react-js-301f
     const handlePickFile = (e) => {
         if (e.target.files[0]) {
-            const reader = new FileReader()
-            reader.readAsArrayBuffer(e.target.files[0])
-            reader.onloadend = () => {
-                setSelectedFile({
-                    src: URL.createObjectURL(e.target.files[0]),
-                    alt: e.target.files[0].name,
-                    buffer: e.target.files[0]
-                })
-            }
-
+            setSelectedFile({
+                src: URL.createObjectURL(e.target.files[0]),
+                alt: e.target.files[0].name,
+                file: e.target.files[0]
+            })
         }
     }
 
@@ -41,7 +47,7 @@ const MintingSection = () => {
         setSelectedFile({
             src: '',
             alt: '',
-            buffer: ''
+            file: ''
         });
     }
 
@@ -54,6 +60,10 @@ const MintingSection = () => {
         }
     }
 
+    const pickOrganization = (organization) => {
+        setChosenOrganization(organization)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setSubmitted(true)
@@ -64,8 +74,31 @@ const MintingSection = () => {
             console.log('selected file', selectedFile)
             console.log('donation ', donation)
             try {
-                const { cid } = await ipfs.add(selectedFile.buffer)
-                console.log(cid)
+                const { cid } = await ipfs.add(selectedFile.file)
+                console.log(convertToBase32(cid.string))
+                const cidV1 = convertToBase32(cid.string)
+                const metadata = {
+                    name: name,
+                    description: description,
+                    imageURL: `ipfs://${cidV1}`
+                }
+
+                const cidMetadata = await ipfs.add(JSON.stringify(metadata))
+                console.log('You will store the value: ', cidMetadata.cid + " in the smart contract!")
+                const chosenNonProfitOrganization = '0x0b4b14BB8f0aD766eEC1C1A4DFBbdf1568eA4d28'
+                await greenCollectibleContract.methods.createCollectibleAndDonate(cidMetadata.cid, chosenNonProfitOrganization).send({ from: account, gas: '2000000' })
+                    .on('receipt', async () => {
+                        toast.success(`Your NFT has been successfully minted!\nYou will now be redirected to your items.`, {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            onClose: () => history.push("/my-items")
+                        });
+                    })
             } catch (error) {
                 console.error(error);
             }
@@ -82,6 +115,7 @@ const MintingSection = () => {
                     isValid={checkIsValidFile(selectedFile)} submitted={submitted} />
                 <DonationInput donation={donation} handleDonationInput={handleDonationInput} isValid={checkIsValidDonation(donation)}
                     submitted={submitted} />
+                <Dropdown chosenOrganization={chosenOrganization} pickOrganization={pickOrganization} />
                 <GeneralInformation name={name} description={description} handleChangeName={e => setName(e.target.value)}
                     handleChangeDescription={e => setDescription(e.target.value)} submitted={submitted} />
                 <div className='flex justify-center'>

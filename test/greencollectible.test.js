@@ -77,16 +77,16 @@ contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, inelig
         });
 
         it('The value transfered cannot be lower than 0.001 eth.', async () => {
-            await truffleAssert.reverts(greenCollectible.createCollectibleAndDonate('ipfshash', 'metadata', nonProfitGreenOrganization, { from: artist, value: convertTokensToWei('0.0001') }));
+            await truffleAssert.reverts(greenCollectible.createCollectibleAndDonate('metadata', nonProfitGreenOrganization, { from: artist, value: convertTokensToWei('0.0001') }));
         })
 
         it('Cannot send the value to yourself or any other account that is ineligible to receive it.', async () => {
-            await truffleAssert.reverts(greenCollectible.createCollectibleAndDonate('ipfshash', 'metadata', artist, { from: artist, value: convertTokensToWei('0.001') }));
+            await truffleAssert.reverts(greenCollectible.createCollectibleAndDonate('metadata', artist, { from: artist, value: convertTokensToWei('0.001') }));
         })
 
-        it('The hash "ipfshash" is not minted before the function call.', async () => {
-            const hasBeenMinted = await greenCollectible.hasBeenMinted('ipfshash')
-            assert.equal(hasBeenMinted, false, 'The hash "ipfshash" has not been minted, so it should be false.')
+        it('The hash "metadata" is not minted before the function call.', async () => {
+            const hasBeenMinted = await greenCollectible.hasBeenMinted('metadata')
+            assert.equal(hasBeenMinted, false, 'The hash "metadata" has not been minted, so it should be false.')
         })
 
         it('The artist should have 0 eth for their total donations.', async () => {
@@ -95,12 +95,12 @@ contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, inelig
         })
 
         it('Give a new id to a newly created token', async () => {
-            const newTokenId = await greenCollectible.createCollectibleAndDonate.call('ipfshash', 'metadata', nonProfitGreenOrganization, { from: artist, value: convertTokensToWei('0.001') })
+            const newTokenId = await greenCollectible.createCollectibleAndDonate.call('metadata', nonProfitGreenOrganization, { from: artist, value: convertTokensToWei('0.001') })
             assert.equal(parseInt(newTokenId.toString()), 1, 'The new token id should be 1.')
         })
 
         it('Mint a NFT and emit events.', async () => {
-            const result = await greenCollectible.createCollectibleAndDonate('ipfshash', 'metadata', nonProfitGreenOrganization, { from: artist, value: convertTokensToWei('0.001') })
+            const result = await greenCollectible.createCollectibleAndDonate('metadata', nonProfitGreenOrganization, { from: artist, value: convertTokensToWei('0.001') })
             assert.equal(result.logs.length, 2, 'Should trigger two events.');
 
             //event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
@@ -117,9 +117,9 @@ contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, inelig
         })
 
         it('Check if hash has been minted and that you cannot mint the same hash again.', async () => {
-            const hasBeenMinted = await greenCollectible.hasBeenMinted('ipfshash')
-            assert.equal(hasBeenMinted, true, 'The hash "ipfshash" has been minted.')
-            await truffleAssert.reverts(greenCollectible.createCollectibleAndDonate('ipfshash', 'metadata', nonProfitGreenOrganization, { from: artist, value: convertTokensToWei('0.001') }));
+            const hasBeenMinted = await greenCollectible.hasBeenMinted('metadata')
+            assert.equal(hasBeenMinted, true, 'The hash "metadata" has been minted.')
+            await truffleAssert.reverts(greenCollectible.createCollectibleAndDonate('metadata', nonProfitGreenOrganization, { from: artist, value: convertTokensToWei('0.001') }));
         })
 
         it('Increment the total donations by the artist.', async () => {

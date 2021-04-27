@@ -3,7 +3,7 @@ import CustomNavLink from '../elements/CustomNavLink'
 
 const Footer = () => {
     return (
-        <div className="bg-green-700 mt-10">
+        <div className="bg-green-700 mt-10 bottom-0 w-full">
             <div className="max-w-6xl m-auto text-white flex justify-between h-40">
                 <div className="p-5 w-48 ">
                     <div className="text-xs uppercase text-white font-medium">Home</div>

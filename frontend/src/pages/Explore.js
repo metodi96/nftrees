@@ -5,7 +5,7 @@ const Explore = () => {
     return (
         <div>
             <TreeSection />
-            <div class='my-2'>
+            <div className='my-2'>
 
             </div>
         </div>

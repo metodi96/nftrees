@@ -10,6 +10,9 @@ import {
   getGreenCollectibleContractInstance
 } from './utils/contracts'
 import { fetchConversionRate } from './utils/conversionRate';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import MyItems from './pages/MyItems';
 
 function App({ web3 }) {
 
@@ -80,9 +83,11 @@ function App({ web3 }) {
         <Switch>
           <Route path='/' exact component={Explore} />
           <Route path='/create' exact component={Create} />
+          <Route path='/my-items' exact component={MyItems} />
           <Route path='/about' exact component={About} />
         </Switch>
         <Footer />
+        <ToastContainer autoClose={5000} />
       </div>
     </AppContext.Provider>
   );
