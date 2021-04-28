@@ -35,7 +35,7 @@ contract GreenCollectible is ERC721, Ownable {
     ) public payable returns (uint256) {
         require(
             msg.value >= 0.001 ether,
-            "You have to donate at least 0.01 eth to the non-profit organization in order to create the NFT."
+            "You have to donate at least 0.001 eth to the non-profit organization in order to create the NFT."
         );
         require(
             isAnEligibleNonProfitOrganization[recipient],

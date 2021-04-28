@@ -9,9 +9,10 @@ import AppContext from '../appContext'
 import { toast } from 'react-toastify';
 import { useHistory } from "react-router-dom";
 import Dropdown from '../elements/Dropdown'
+import { convertToWei } from '../utils/contracts'
 
 const MintingSection = () => {
-    const { greenCollectibleContract, account } = useContext(AppContext)
+    const { greenCollectibleContract, account, handleBlockScreen, web3 } = useContext(AppContext)
     const [selectedFile, setSelectedFile] = useState({ src: '', alt: '', file: '' });
     const [donation, setDonation] = useState(0.001)
     const [chosenOrganization, setChosenOrganization] = useState(
@@ -69,25 +70,26 @@ const MintingSection = () => {
         setSubmitted(true)
 
         if ((checkIsValidName(name) && checkIsValidDonation(donation) && checkIsValidFile(selectedFile))) {
-            console.log('submit')
             console.log('name', name)
             console.log('selected file', selectedFile)
             console.log('donation ', donation)
+            handleBlockScreen(true)
             try {
                 const { cid } = await ipfs.add(selectedFile.file)
-                console.log(convertToBase32(cid.string))
+                //console.log(convertToBase32(cid.string))
                 const cidV1 = convertToBase32(cid.string)
                 const metadata = {
                     name: name,
                     description: description,
                     imageURL: `ipfs://${cidV1}`
                 }
-
+                const donationInWei = convertToWei(donation.toString(), web3).toString()
+                //console.log('Donation in wei: ', donationInWei)
                 const cidMetadata = await ipfs.add(JSON.stringify(metadata))
-                console.log('You will store the value: ', cidMetadata.cid + " in the smart contract!")
-                const chosenNonProfitOrganization = '0x0b4b14BB8f0aD766eEC1C1A4DFBbdf1568eA4d28'
-                await greenCollectibleContract.methods.createCollectibleAndDonate(cidMetadata.cid, chosenNonProfitOrganization).send({ from: account, gas: '2000000' })
+                //console.log('You will store the value: ', cidMetadata.cid + " in the smart contract!")
+                await greenCollectibleContract.methods.createCollectibleAndDonate(cidMetadata.cid, chosenOrganization.address).send({ from: account, gas: '2000000', value: donationInWei })
                     .on('receipt', async () => {
+                        handleBlockScreen(false)
                         toast.success(`Your NFT has been successfully minted!\nYou will now be redirected to your items.`, {
                             position: "top-right",
                             autoClose: 5000,
@@ -100,6 +102,7 @@ const MintingSection = () => {
                         });
                     })
             } catch (error) {
+                handleBlockScreen(false)
                 console.error(error);
             }
         }

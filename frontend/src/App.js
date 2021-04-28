@@ -13,6 +13,7 @@ import { fetchConversionRate } from './utils/conversionRate';
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import MyItems from './pages/MyItems';
+import Dimmer from './components/Dimmer';
 
 function App({ web3 }) {
 
@@ -88,6 +89,7 @@ function App({ web3 }) {
         </Switch>
         <Footer />
         <ToastContainer autoClose={5000} />
+        {screenBlocked && <Dimmer />}
       </div>
     </AppContext.Provider>
   );

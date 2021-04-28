@@ -18,7 +18,7 @@ export const fetchConversionRate = async () => {
             vs_currencies: ['usd'],
         });
         if (apiResponse.success) {
-            console.log('> data <', apiResponse);
+            console.log('Data: ', apiResponse);
             localStorage.setItem(CONVERSION_RATE, JSON.stringify(apiResponse.data.ethereum));
         } else {
             const rates = {
@@ -37,7 +37,7 @@ const getConversionRateFromNomics = async (currency = CURRENCY.USD) => {
     const ticker = await axios.get(`https://api.nomics.com/v1/currencies/ticker?key=demo-b5d84e505a11969a7184f899fbb40ae1&ids=ETH&convert=${currency}&interval=1h`, {
         timeout: 15000
     });
-    console.log('>>>> ticker', ticker);
+    console.log('Ticker ', ticker);
     return ticker.data[0].price;
 };
 
