@@ -8,27 +8,62 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract GreenCollectible is ERC721, Ownable {
     using Counters for Counters.Counter;
 
-    uint256 public donationAmount;
+    // Counter for token ids
     Counters.Counter private tokenIds;
 
+    // Top ten donation
     struct TopTenDonation {
         address donator;
         uint256 totalDonationsByDonator;
     }
+
+    // Array of structs of top ten donators and their donations
     TopTenDonation[10] private topTenDonations;
 
+    // Mapping for the to set a tokenURI to a tokenId
     mapping(uint256 => string) private _tokenURIs;
+
+    // Mapping to check if an address is an authorized non-profit organization
     mapping(address => bool) public isAnEligibleNonProfitOrganization;
-    //used to keep track of how much eth has been donated by a wallet address
+
+    // Mapping to keep track of how much eth has been donated by a wallet address
     mapping(address => uint256) public totalDonations;
+
+    // Mapping to check if the metadata has been minted
     mapping(string => bool) public hasBeenMinted;
 
+    /**
+     * @dev Emitted when `from` creates a collectible and donates `to` the `amount`.
+     */
     event Donated(address from, address to, uint256 amount);
+
+    /**
+     * @dev Emitted when `recipient` has been authorized to receive donations by the owner of this smart contract.
+     */
     event Authorized(address recipient);
+
+    /**
+     * @dev Emitted when `recipient` has been unauthorized to receive donations by the owner of this smart contract.
+     */
     event Unauthorized(address recipient);
 
+    /**
+     * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection inheriting from the ERC721 smart contract.
+     */
     constructor() ERC721("NFTreeCollectible", "NFTC") {}
 
+    /**
+     * @dev create a collectible with a `metadata` for the msg.sender and transfer eth to an authorized `recipient`
+     *
+     * Requirements:
+     *
+     * - msg.value must be at least 0.001 eth.
+     * - `recipient` must be authorized by this contract's owner
+     * - `metadata` should be minted for the first time
+     *
+     * Emits a {Transfer} event - comes from the ERC-721 smart contract.
+     * Emits a {Donated} event.
+     */
     function createCollectibleAndDonate(
         string memory metadata,
         address payable recipient
@@ -63,6 +98,15 @@ contract GreenCollectible is ERC721, Ownable {
         return newItemId;
     }
 
+    /**
+     * @dev authorizes a recipient which in this case is to be a non-profit organization which plants trees around the world
+     *
+     * Requirements:
+     * - msg.sender has to be the owner of this smart contract
+     * - `recipient` must not have been authorized.
+     *
+     * Emits an {Authorized} event.
+     */
     function authorizeRecipient(address recipient) external onlyOwner {
         require(
             !isAnEligibleNonProfitOrganization[recipient],
@@ -72,6 +116,15 @@ contract GreenCollectible is ERC721, Ownable {
         emit Authorized(recipient);
     }
 
+    /**
+     * @dev unauthorizes a recipient which in this case is to be a non-profit organization which plants trees around the world
+     *
+     * Requirements:
+     * - msg.sender has to be the owner of this smart contract
+     * - `recipient` must have been authorized.
+     *
+     * Emits an {Unauthorized} event.
+     */
     function unauthorizeRecipient(address recipient) external onlyOwner {
         require(
             isAnEligibleNonProfitOrganization[recipient],
@@ -81,6 +134,10 @@ contract GreenCollectible is ERC721, Ownable {
         emit Unauthorized(recipient);
     }
 
+    /**
+     * @dev check if a certain `donator` is a top ten donator and if not, adds them to the array
+     *
+     */
     function checkDonatorForTopTen(address donator) private {
         //get index of the current max element
         uint256 i = 0;
@@ -101,6 +158,12 @@ contract GreenCollectible is ERC721, Ownable {
         }
     }
 
+    /**
+     * @dev sets a `tokenURI` for an existing `tokenId`
+     *
+     * Requirements:
+     * - `tokenId` must exist
+     */
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
         internal
         virtual
@@ -112,6 +175,9 @@ contract GreenCollectible is ERC721, Ownable {
         _tokenURIs[tokenId] = _tokenURI;
     }
 
+    /**
+     * @dev retrieves a top ten donation containing the `donator` and their `totalDonationsByDonator`
+     */
     function getTopTenDonation(uint256 id)
         public
         view
