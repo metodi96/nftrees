@@ -55,6 +55,7 @@ function App({ web3 }) {
 
   useEffect(() => {
     const greenCollectibleContract = getGreenCollectibleContractInstance(web3)
+    console.log(greenCollectibleContract)
     setGreenCollectibleContract(greenCollectibleContract)
   }, [web3])
 

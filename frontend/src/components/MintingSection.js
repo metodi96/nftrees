@@ -70,9 +70,9 @@ const MintingSection = () => {
         setSubmitted(true)
 
         if ((checkIsValidName(name) && checkIsValidDonation(donation) && checkIsValidFile(selectedFile))) {
-            console.log('name', name)
-            console.log('selected file', selectedFile)
-            console.log('donation ', donation)
+            //console.log('name', name)
+            //console.log('selected file', selectedFile)
+            //console.log('donation ', donation)
             handleBlockScreen(true)
             try {
                 const { cid } = await ipfs.add(selectedFile.file)
@@ -87,7 +87,7 @@ const MintingSection = () => {
                 //console.log('Donation in wei: ', donationInWei)
                 const cidMetadata = await ipfs.add(JSON.stringify(metadata))
                 //console.log('You will store the value: ', cidMetadata.cid + " in the smart contract!")
-                await greenCollectibleContract.methods.createCollectibleAndDonate(cidMetadata.cid, chosenOrganization.address).send({ from: account, gas: '2000000', value: donationInWei })
+                await greenCollectibleContract.methods.createCollectibleAndDonate(cidMetadata.cid.toString(), chosenOrganization.address).send({ from: account, gas: '2000000', value: donationInWei })
                     .on('receipt', async () => {
                         handleBlockScreen(false)
                         toast.success(`Your NFT has been successfully minted!\nYou will now be redirected to your items.`, {

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract GreenCollectible is ERC721, Ownable {
+contract GreenCollectible is ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
 
     // Counter for token ids
@@ -159,6 +159,20 @@ contract GreenCollectible is ERC721, Ownable {
     }
 
     /**
+     * @dev retrieves a top ten donation containing the `donator` and their `totalDonationsByDonator`
+     */
+    function getTopTenDonation(uint256 id)
+        public
+        view
+        returns (address donator, uint256 totalDonationsByDonator)
+    {
+        return (
+            topTenDonations[id].donator,
+            topTenDonations[id].totalDonationsByDonator
+        );
+    }
+
+    /**
      * @dev sets a `tokenURI` for an existing `tokenId`
      *
      * Requirements:
@@ -176,16 +190,23 @@ contract GreenCollectible is ERC721, Ownable {
     }
 
     /**
-     * @dev retrieves a top ten donation containing the `donator` and their `totalDonationsByDonator`
+     * @dev See {IERC721Metadata-tokenURI}.
      */
-    function getTopTenDonation(uint256 id)
-        public
-        view
-        returns (address donator, uint256 totalDonationsByDonator)
-    {
-        return (
-            topTenDonations[id].donator,
-            topTenDonations[id].totalDonationsByDonator
-        );
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        require(_exists(tokenId), "ERC721URIStorage: URI query for nonexistent token");
+
+        string memory _tokenURI = _tokenURIs[tokenId];
+        string memory base = _baseURI();
+
+        // If there is no base URI, return the token URI.
+        if (bytes(base).length == 0) {
+            return _tokenURI;
+        }
+        // If both are set, concatenate the baseURI and tokenURI (via abi.encodePacked).
+        if (bytes(_tokenURI).length > 0) {
+            return string(abi.encodePacked(base, _tokenURI));
+        }
+
+        return super.tokenURI(tokenId);
     }
 }
