@@ -61,23 +61,23 @@ const MyItems = () => {
     }, [account, greenCollectibleContract])
     return (
         <div className='flex flex-col items-center space-y-4 mb-10'>
-            <div className='flex justify-center mx-4 space-x-4'>
+            <div className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 justify-center'>
                 {
                     myItems.map((entry, index) => (
                         <NFTCard key={index} entry={entry} />
                     ))
                 }
             </div>
-            <div className='flex space-x-4 text-lg font-bold uppercase'>
-                <div className='p-4 border rounded-md items-center space-x-4'>
+            <div className='flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 text-base sm:text-lg font-bold uppercase'>
+                <div className='flex p-4 border rounded-md items-center space-x-4 w-full'>
                     <span>Total donations:</span>
-                    <span className='font-bold text-4xl text-green-700'>${ethRatesForDonation.usd}</span>
+                    <span className='font-bold text-xl sm:text-3xl md:text-4xl text-green-700'>${ethRatesForDonation.usd}</span>
                 </div>
-                <div className='flex p-4 border rounded-md items-center space-x-4'>
+                <div className='flex p-4 border rounded-md items-center space-x-4 w-full'>
                     <span>Total trees planted:</span>
                     <div className='flex space-x-2'>
-                        <span className='font-bold text-4xl text-green-700'>{Math.floor(ethRatesForDonation.usd)}</span>
-                        <img src='tree.png' alt='tree' width='40' height='30' />
+                        <span className='font-bold text-xl sm:text-3xl md:text-4xl text-green-700'>{Math.floor(ethRatesForDonation.usd)}</span>
+                        <div className='w-5 h-5 sm:w-10 sm:h-10'><img src='tree.png' alt='tree' /></div>
                     </div>
                 </div>
             </div>

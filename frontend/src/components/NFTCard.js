@@ -1,13 +1,14 @@
 import React from 'react'
+import ReactTooltip from 'react-tooltip'
+import '../styles/nftcard.css'
 
 const NFTCard = ({ entry }) => {
 
     //tokenURI is to be used later to retrieve the donations
     const { name, description, imageURL, tokenURI } = entry
    
-    console.log(imageURL.split('ipfs://'))
     return (
-        <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-4">
+        <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-4 hover:shadow-2xl transform transition duration-500 hover:scale-105">
             <img className="w-full h-54 object-fill object-center" 
             src={`https://${imageURL.split('ipfs://')[1]}.ipfs.dweb.link`} alt="avatar" />
             <div className="flex justify-center items-center px-6 py-3 bg-green-700">
@@ -28,7 +29,12 @@ const NFTCard = ({ entry }) => {
                         </g>
                     </g>
                 </svg>
-                <h1 className="mx-3 text-white font-semibold text-lg">Rank IV</h1>
+                <h1 data-arrow-color='#fff'
+                 data-tip='Based on the total eth that has been donated via transactions with this NFT.' 
+                 className="mx-3 text-white font-semibold text-lg"
+                 data-border-color='#047857'
+                 data-border={true}>Rank I</h1>
+                <ReactTooltip className='w-40 popup' />
             </div>
             <div className="py-4 px-6">
                 <div className="flex items-center mt-4 text-gray-700">

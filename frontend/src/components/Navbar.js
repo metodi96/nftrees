@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import CustomNavLink from '../elements/CustomNavLink'
 import AppContext from '../appContext'
 import { handleConnect, handleInstall } from '../utils/metamask'
 
 const Navbar = () => {
     const { account, hasWalletAddressAfterChange } = useContext(AppContext);
+    const [isOpenNavbar, setIsOpenNavbar] = useState(false)
 
     const renderMetaMaskLabel = () => {
         if (window.ethereum) {
@@ -40,7 +41,10 @@ const Navbar = () => {
                 <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                     <div className="relative flex items-center justify-between h-20">
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                            <button type="button" className="inline-flex items-center justify-center p-2 rounded-md hover:text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                            <button type="button"
+                             className="inline-flex items-center justify-center p-2 rounded-md hover:text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
+                             aria-controls="mobile-menu" aria-expanded="false"
+                             onClick={() => setIsOpenNavbar(!isOpenNavbar)}>
                                 <span className="sr-only">Open main menu</span>
                                 <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -52,8 +56,8 @@ const Navbar = () => {
                         </div>
                         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                             <div className="flex-shrink-0 flex items-center">
-                            <a className="block lg:hidden" href="/" rel='noreferrer'><img className="h-16 w-auto" src="logo.png" alt="NFTrees Logo" /></a>
-                            <a className="hidden lg:block" href="/" rel='noreferrer'><img className="h-16 w-auto" src="logo.png" alt="NFTrees Logo" /></a>
+                                <a className="block lg:hidden" href="/" rel='noreferrer'><img className="h-16 w-auto" src="logo.png" alt="NFTrees Logo" /></a>
+                                <a className="hidden lg:block" href="/" rel='noreferrer'><img className="h-16 w-auto" src="logo.png" alt="NFTrees Logo" /></a>
                             </div>
                             <div className="hidden sm:block sm:ml-6">
                                 <div className="flex space-x-4 my-2">
@@ -73,15 +77,16 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
-                <div className="sm:hidden" id="mobile-menu">
-                    <div className="px-2 pt-2 pb-3 space-y-1">
-                        <CustomNavLink content='Explore' path='/' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
-                        <CustomNavLink content='Create' path='/create' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
-                        <CustomNavLink content='My Items' path='/my-items' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
-                        <CustomNavLink content='About' path='/about' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
+                {isOpenNavbar &&
+                    <div className="sm:hidden" id="mobile-menu">
+                        <div className="px-2 pt-2 pb-3 space-y-1">
+                            <CustomNavLink content='Explore' path='/' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
+                            <CustomNavLink content='Create' path='/create' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
+                            <CustomNavLink content='My Items' path='/my-items' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
+                            <CustomNavLink content='About' path='/about' classes="text-gray-800 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" />
+                        </div>
                     </div>
-                </div>
-
+                }
             </nav>
             {/*<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                     <path fill="#065f46" fillOpacity="1" d="M0,96L60,85.3C120,75,240,53,360,64C480,75,600,117,720,160C840,203,960,245,1080,266.7C1200,288,1320,288,1380,288L1440,288L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
