@@ -20,6 +20,9 @@ const Footer = () => {
                     <a className="my-3 block" href="/">contact@company.com <span className="text-whitetext-xs p-1"></span></a>
                 </div>
             </div>
+            <div>
+                
+            </div>
         </div>
     )
 }

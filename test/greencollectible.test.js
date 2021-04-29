@@ -3,7 +3,7 @@ const truffleAssert = require('truffle-assertions')
 
 const { convertTokensToWei } = require('../utils/tokens')
 
-contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, ineligibleWalletAddress]) => {
+contract('GreenCollectible', ([owner, artist, nonProfitGreenOrganization, ineligibleWalletAddress]) => {
     let greenCollectible;
 
     before(async () => {
@@ -11,7 +11,7 @@ contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, inelig
     });
 
     describe('Green collectible deployment', async () => {
-        it("Deploys the GreenCollectible SC successfully.", async () => {
+        it('Deploys the GreenCollectible SC successfully.', async () => {
             console.log('Address is ', greenCollectible.address)
             assert.notEqual(greenCollectible.address, '', 'should not be empty');
             assert.notEqual(greenCollectible.address, 0x0, 'should not be the 0x0 address');
@@ -41,7 +41,7 @@ contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, inelig
             const isEligibleNew = await greenCollectible.isAnEligibleNonProfitOrganization(nonProfitGreenOrganization)
             assert.equal(isEligibleNew, true, 'The organization should be authorized to receive eth.')
             assert.equal(result.logs.length, 1, 'Should trigger one event');
-            assert.equal(result.logs[0].event, 'Authorized', 'Should be the "Authorized" event');
+            assert.equal(result.logs[0].event, 'Authorized', 'Should be the \'Authorized\' event');
             assert.equal(result.logs[0].args.recipient, nonProfitGreenOrganization, 'Should be the non-profit green organization wallet address.');
         })
 
@@ -61,7 +61,7 @@ contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, inelig
             const isEligibleNew = await greenCollectible.isAnEligibleNonProfitOrganization(nonProfitGreenOrganization)
             assert.equal(isEligibleNew, false, 'The organization should now not be authorized to receive eth anymore.')
             assert.equal(result.logs.length, 1, 'Should trigger one event');
-            assert.equal(result.logs[0].event, 'Unauthorized', 'Should be the "Authorized" event');
+            assert.equal(result.logs[0].event, 'Unauthorized', 'Should be the \'Authorized\' event');
             assert.equal(result.logs[0].args.recipient, nonProfitGreenOrganization, 'Should be the non-profit green organization wallet address.');
         })
 
@@ -84,14 +84,19 @@ contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, inelig
             await truffleAssert.reverts(greenCollectible.createCollectibleAndDonate('metadata', artist, { from: artist, value: convertTokensToWei('0.001') }));
         })
 
-        it('The hash "metadata" is not minted before the function call.', async () => {
+        it('The hash \'metadata\' is not minted before the function call.', async () => {
             const hasBeenMinted = await greenCollectible.hasBeenMinted('metadata')
-            assert.equal(hasBeenMinted, false, 'The hash "metadata" has not been minted, so it should be false.')
+            assert.equal(hasBeenMinted, false, 'The hash \'metadata\' has not been minted, so it should be false.')
         })
 
         it('The artist should have 0 eth for their total donations.', async () => {
-            const totalDonationsByArtist = await greenCollectible.totalDonations(artist)
+            const totalDonationsByArtist = await greenCollectible.totalDonationsByAccount(artist)
             assert.equal(parseInt(totalDonationsByArtist.toString()), convertTokensToWei('0'), 'The artist should not have donated anything.')
+        })
+
+        it('The NFT should have 0 eth for their total donations.', async () => {
+            const totalDonationsByNFT = await greenCollectible.totalDonationsByNFT(artist)
+            assert.equal(parseInt(totalDonationsByNFT.toString()), convertTokensToWei('0'), 'The NFT should not have donated anything.')
         })
 
         it('Give a new id to a newly created token', async () => {
@@ -104,13 +109,13 @@ contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, inelig
             assert.equal(result.logs.length, 2, 'Should trigger two events.');
 
             //event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
-            assert.equal(result.logs[0].event, 'Transfer', 'Should be the "Transfer" event.');
+            assert.equal(result.logs[0].event, 'Transfer', 'Should be the \'Transfer\' event.');
             assert.equal(result.logs[0].args.from, 0x0000000000000000000000000000000000000000, 'Should be the 0x0000000000000000000000000000000000000000 address.');
             assert.equal(result.logs[0].args.to, artist, 'should log the recipient which is the artist.');
             assert.equal(result.logs[0].args.tokenId, 1, 'should log the token id which is 1.');
 
             //event Donated(address from, address to, uint256 amount);
-            assert.equal(result.logs[1].event, 'Donated', 'Should be the "Donated" event.');
+            assert.equal(result.logs[1].event, 'Donated', 'Should be the \'Donated\' event.');
             assert.equal(result.logs[1].args.from, artist, 'Should log the sender which is the artist.');
             assert.equal(result.logs[1].args.to, nonProfitGreenOrganization, 'should log the recipient which is the non-profit organization.');
             assert.equal(result.logs[1].args.amount, convertTokensToWei('0.001'), 'should log the value which is 0.001 eth.');
@@ -118,19 +123,18 @@ contract("GreenCollectible", ([owner, artist, nonProfitGreenOrganization, inelig
 
         it('Check if hash has been minted and that you cannot mint the same hash again.', async () => {
             const hasBeenMinted = await greenCollectible.hasBeenMinted('metadata')
-            assert.equal(hasBeenMinted, true, 'The hash "metadata" has been minted.')
+            assert.equal(hasBeenMinted, true, 'The hash \'metadata\' has been minted.')
             await truffleAssert.reverts(greenCollectible.createCollectibleAndDonate('metadata', nonProfitGreenOrganization, { from: artist, value: convertTokensToWei('0.001') }));
         })
 
         it('Increment the total donations by the artist.', async () => {
-            const totalDonationsByArtist = await greenCollectible.totalDonations(artist)
+            const totalDonationsByArtist = await greenCollectible.totalDonationsByAccount(artist)
             assert.equal(parseInt(totalDonationsByArtist.toString()), convertTokensToWei('0.001'), 'The artist should have donated 0.001')
         })
 
-        it('The artist should be part of the top 10 donators array.', async () => {
-            const topTenDonation = await greenCollectible.getTopTenDonation(0)
-            assert.equal(topTenDonation.donator, artist, 'The array should be of length 10.')
-            assert.equal(topTenDonation.totalDonationsByDonator, convertTokensToWei('0.001'), 'The total donated value by the artist should be 0.001 eth.')
+        it('Increment the total donations by the NFT.', async () => {
+            const totalDonationsByNFT = await greenCollectible.totalDonationsByNFT(1)
+            assert.equal(parseInt(totalDonationsByNFT.toString()), convertTokensToWei('0.001'), 'The NFT should have donated 0.001')
         })
     })
 });

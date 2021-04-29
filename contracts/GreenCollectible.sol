@@ -11,23 +11,17 @@ contract GreenCollectible is ERC721Enumerable, Ownable {
     // Counter for token ids
     Counters.Counter private tokenIds;
 
-    // Top ten donation
-    struct TopTenDonation {
-        address donator;
-        uint256 totalDonationsByDonator;
-    }
-
-    // Array of structs of top ten donators and their donations
-    TopTenDonation[10] private topTenDonations;
-
     // Mapping for the to set a tokenURI to a tokenId
     mapping(uint256 => string) private _tokenURIs;
 
     // Mapping to check if an address is an authorized non-profit organization
     mapping(address => bool) public isAnEligibleNonProfitOrganization;
 
-    // Mapping to keep track of how much eth has been donated by a wallet address
-    mapping(address => uint256) public totalDonations;
+    // Mapping to keep track of how much eth has been donated by a an account
+    mapping(address => uint256) public totalDonationsByAccount;
+
+    // Mapping to keep track of how much eth has been donated by a minted NFT. Will be used when selling.
+    mapping(uint256 => uint256) public totalDonationsByNFT;
 
     // Mapping to check if the metadata has been minted
     mapping(string => bool) public hasBeenMinted;
@@ -84,14 +78,14 @@ contract GreenCollectible is ERC721Enumerable, Ownable {
         //send to non-profit organization
         (bool sent, ) = recipient.call{value: msg.value}("");
         require(sent, "Failed to send Ether");
-        totalDonations[msg.sender] = totalDonations[msg.sender] + msg.value;
+        totalDonationsByAccount[msg.sender] = totalDonationsByAccount[msg.sender] + msg.value;
 
         hasBeenMinted[metadata] = true;
         tokenIds.increment();
         uint256 newItemId = tokenIds.current();
+        totalDonationsByNFT[newItemId] = totalDonationsByNFT[newItemId] + msg.value;
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, metadata);
-        checkDonatorForTopTen(msg.sender);
 
         emit Donated(msg.sender, recipient, msg.value);
 
@@ -132,44 +126,6 @@ contract GreenCollectible is ERC721Enumerable, Ownable {
         );
         isAnEligibleNonProfitOrganization[recipient] = false;
         emit Unauthorized(recipient);
-    }
-
-    /**
-     * @dev check if a certain `donator` is a top ten donator and if not, adds them to the array
-     *
-     */
-    function checkDonatorForTopTen(address donator) private {
-        //get index of the current max element
-        uint256 i = 0;
-        bool isToBeUpdated = false;
-        for (i; i < topTenDonations.length; i++) {
-            if (topTenDonations[i].totalDonationsByDonator < totalDonations[donator]) {
-                isToBeUpdated = true;
-                break;
-            }
-        }
-        if (isToBeUpdated) {
-            for (uint256 j = topTenDonations.length - 1; j > i; j--) {
-                topTenDonations[j].donator = topTenDonations[j - 1].donator;
-                topTenDonations[j].totalDonationsByDonator = topTenDonations[j - 1].totalDonationsByDonator;  
-            }
-            topTenDonations[i].donator = donator;
-            topTenDonations[i].totalDonationsByDonator = totalDonations[donator]; 
-        }
-    }
-
-    /**
-     * @dev retrieves a top ten donation containing the `donator` and their `totalDonationsByDonator`
-     */
-    function getTopTenDonation(uint256 id)
-        public
-        view
-        returns (address donator, uint256 totalDonationsByDonator)
-    {
-        return (
-            topTenDonations[id].donator,
-            topTenDonations[id].totalDonationsByDonator
-        );
     }
 
     /**

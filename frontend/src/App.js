@@ -88,9 +88,9 @@ function App({ web3 }) {
           <Route path='/my-items' exact component={MyItems} />
           <Route path='/about' exact component={About} />
         </Switch>
-        <Footer />
         <ToastContainer autoClose={5000} />
         {screenBlocked && <Dimmer />}
+        <Footer />
       </div>
     </AppContext.Provider>
   );

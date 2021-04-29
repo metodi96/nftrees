@@ -7,17 +7,14 @@ const TreeSection = () => {
                 <h1 className="text-xl sm:text-4xl">Your eco-friendly NFT marketplace</h1>
                 <h2 className="text-sm sm:text-xl">By creating a NFT you are indirectly planting new trees all around the world</h2>
                 <div className="flex justify-center space-x-10">
-                    <a href='/' rel='noreferrer' className="bg-green-700 w-30 sm:w-40 hover:shadow-xl text-white font-bold py-2 px-4 rounded">
-                        Explore
-                    </a>
-                    <a href='/create' rel='noreferrer' className="bg-white w-30 sm:w-40 border-green-700 border-2 hover:shadow-xl text-green-700 font-bold py-2 px-4 rounded">
+                    <a href='/create' rel='noreferrer' className="bg-green-700 w-30 sm:w-40 hover:shadow-xl text-white font-bold py-3 px-4 rounded-2xl">
                         Create
                     </a>
                 </div>
             </div>
             {/** svg image by https://undraw.co/ - editted using https://editor.method.ac/ */}
             <div className='hidden sm:flex sm:justify-center'>
-                <svg  width="811.34934" height="624.08084" xmlns="http://www.w3.org/2000/svg">
+                <svg width="811.34934" height="624.08084" xmlns="http://www.w3.org/2000/svg">
                     <g>
                         <title>Layer 1</title>
                         <path id="svg_1" fill="#ffb8b8" d="m421.82417,432.16029a11.48908,11.48908 0 0 1 -8.8618,-15.226l-50.423,-87.20919l23.83287,-7.50038l42.114,87.98251a11.55132,11.55132 0 0 1 -6.662,21.953l-0.00007,0.00006z" />

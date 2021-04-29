@@ -61,10 +61,10 @@ const Navbar = () => {
                             </div>
                             <div className="hidden sm:block sm:ml-6">
                                 <div className="flex space-x-4 my-2">
-                                    <CustomNavLink content='Explore' path='/' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
-                                    <CustomNavLink content='Create' path='/create' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
-                                    <CustomNavLink content='My Items' path='/my-items' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
-                                    <CustomNavLink content='About' path='/about' activeClassName='nav-link-active' classes="relative nav-link text-gray-800 px-3 py-2 rounded-md text-md font-bold" />
+                                    <CustomNavLink content='Explore' path='/' activeClassName='nav-link-active' classes="relative nav-link text-gray-400 px-3 py-2 rounded-md text-md font-bold" />
+                                    <CustomNavLink content='Create' path='/create' activeClassName='nav-link-active' classes="relative nav-link text-gray-400 px-3 py-2 rounded-md text-md font-bold" />
+                                    <CustomNavLink content='My Items' path='/my-items' activeClassName='nav-link-active' classes="relative nav-link text-gray-400 px-3 py-2 rounded-md text-md font-bold" />
+                                    <CustomNavLink content='About' path='/about' activeClassName='nav-link-active' classes="relative nav-link text-gray-400 px-3 py-2 rounded-md text-md font-bold" />
                                 </div>
                             </div>
                         </div>
