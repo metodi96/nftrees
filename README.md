@@ -5,7 +5,7 @@ Based on my idea regarding compensating the nature when minting NFTs which is ex
 
 ### Setup for local blockchain environment
 
-Make sure to have a local development Ethereum blockchain started (e.g. Ganache) and also a wallet provider such as MetaMask connected to that development blockchain. 
+Make sure to install [Truffle](https://www.trufflesuite.com/docs/truffle/getting-started/installation) and to have a local development Ethereum blockchain started (e.g. [Ganache](https://www.trufflesuite.com/docs/ganache/overview)) and also a wallet provider such as [MetaMask](https://metamask.io/) connected to that development blockchain. 
 Then you can run the following commands deploy the smart contracts and also test them.
 
 ```PS
@@ -19,6 +19,11 @@ If at some point you would like to redeploy the contracts just run the command
 ```PS
 truffle migrate --reset # build and redeploy the smart contract
 ```
+
+### Learn More
+
+Check out the [Truffle documentation](https://www.trufflesuite.com/docs/truffle/overview).
+
 
 ## Frontend part - React
 
