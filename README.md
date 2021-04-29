@@ -6,7 +6,7 @@ Based on my idea regarding compensating the nature when minting NFTs which is ex
 ### Setup for local blockchain environment
 
 Make sure to install [Truffle](https://www.trufflesuite.com/docs/truffle/getting-started/installation) and to have a local development Ethereum blockchain started (e.g. [Ganache](https://www.trufflesuite.com/docs/ganache/overview)) and also a wallet provider such as [MetaMask](https://metamask.io/) connected to that development blockchain. 
-Then you can run the following commands deploy the smart contracts and also test them.
+Then you can run the following commands to deploy the smart contracts and also test them.
 
 ```PS
 npm install     # install dependencies such as truffle-assertions, @openzeppelin/contracts and ganache-time-traveler
