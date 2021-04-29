@@ -1,4 +1,5 @@
-# NFTrees
+#  [Solutions Bounty] NFTrees
+This project is developed as a participating solution in the Gitcoin Green NFT hackathon as a Solutions Bounty: https://gitcoin.co/issue/GreenNFT/GreenNFTs/1/100025260
 Based on my idea regarding compensating the nature when minting NFTs which is explained in more detail here: https://github.com/levskarcheto96/-Awareness-Bounty-NFTrees
 
 ## Blockchain part - Smart Contracts
