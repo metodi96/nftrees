@@ -10,7 +10,6 @@ const NFTCardRenderer = ({ data, index, style }) => {
             ...style,
             left: style.left + GUTTER_SIZE*8,
             width: style.width - GUTTER_SIZE*8,
-            height: style.height - GUTTER_SIZE*8
           }} className='flex'>
             <NFTCard key={index} entry={item} />
         </div>

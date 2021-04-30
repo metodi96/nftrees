@@ -3,7 +3,6 @@ import TreeSection from '../components/TreeSection'
 import AppContext from '../appContext'
 import axios from 'axios'
 import { convertToBase32 } from '../utils/ipfsUtils'
-import NFTCard from '../components/NFTCard'
 import DonationsInfo from '../components/DonationsInfo'
 import { FixedSizeList as List } from 'react-window';
 import NFTCardRenderer from '../components/NFTCardRenderer'

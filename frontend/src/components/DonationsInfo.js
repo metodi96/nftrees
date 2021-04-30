@@ -29,7 +29,7 @@ const DonationsInfo = ({ donation }) => {
         <div className='flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 text-base sm:text-lg font-bold uppercase'>
             <div className='flex p-4 border rounded-md items-center space-x-4 w-full'>
                 <span>Total donations:</span>
-                <span className='font-bold text-xl sm:text-3xl md:text-4xl text-green-700'>${ethRatesForDonation.usd}</span>
+                <span className='font-bold text-xl sm:text-3xl md:text-4xl text-green-700'>Ξ{convertToTokens(donation.toString(), web3)}</span>
             </div>
             <div className='flex p-4 border rounded-md items-center space-x-4 w-full'>
                 <span>Total trees planted:</span>

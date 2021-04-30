@@ -23,6 +23,7 @@ function App({ web3 }) {
   const [hasAccountChanged, setHasAccountChanged] = useState(false);
   const [screenBlocked, setScreenBlocked] = useState(false);
   const [greenCollectibleContract, setGreenCollectibleContract] = useState(undefined)
+  const [reasonForBlockedScreen, setReasonForBlockedScreen] = useState('TX')
 
   useEffect(() => {
     setInterval(() => {
@@ -33,8 +34,6 @@ function App({ web3 }) {
   useEffect(() => {
     const init = async () => {
       if (window.ethereum) {
-        const networkId = await web3.eth.net.getId();
-        setNetworkId(networkId);
         const [selectedAccount] = await web3.eth.getAccounts();
         setAccount(web3.utils.toChecksumAddress(selectedAccount));
         window.ethereum.on('accountsChanged', (accounts) => {
@@ -54,12 +53,30 @@ function App({ web3 }) {
   }, [web3.utils, web3.eth]);
 
   useEffect(() => {
+    const runEffect = async () => {
+      if (window.ethereum) {
+        const networkDetected = await web3.eth.net.getId();
+        setNetworkId(networkDetected);
+        if (networkId !== 5777 && networkId !== 4) {
+          handleBlockScreen(true, 'NETWORK')
+        } else {
+          handleBlockScreen(false, 'NETWORK')
+        }
+      } else {
+        handleBlockScreen(true, 'NETWORK')
+      }
+    } 
+    runEffect()
+  }, [networkId, web3.eth.net])
+
+  useEffect(() => {
     const greenCollectibleContract = getGreenCollectibleContractInstance(web3)
     console.log(greenCollectibleContract)
     setGreenCollectibleContract(greenCollectibleContract)
   }, [web3])
 
-  const handleBlockScreen = (blocked) => {
+  const handleBlockScreen = (blocked, reason='TX') => {
+    setReasonForBlockedScreen(reason)
     setScreenBlocked(blocked);
   };
 
@@ -89,7 +106,7 @@ function App({ web3 }) {
           <Route path='/about' exact component={About} />
         </Switch>
         <ToastContainer autoClose={5000} />
-        {screenBlocked && <Dimmer />}
+        {screenBlocked && <Dimmer reason={reasonForBlockedScreen} />}
         <Footer />
       </div>
     </AppContext.Provider>
