@@ -3,7 +3,7 @@ import '../styles/loadingplaceholder.css'
 
 const LoadingSkeleton = () => {
     return (
-        <div className='flex flex-col space-y-12'>
+        <div className='flex flex-col space-y-12 mt-10'>
             <div className="w-full flex items-center flex-row justify-center space-x-4">
                 <div className="flex bg-white shadow-md p-4 rounded-md">
                     <div data-placeholder className="mr-2 h-20 w-20 rounded-full overflow-hidden relative bg-gray-200"></div>

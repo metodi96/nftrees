@@ -7,6 +7,7 @@ import DonationsInfo from '../components/DonationsInfo'
 import NFTCardRenderer from '../components/NFTCardRenderer'
 import { FixedSizeList as List } from 'react-window';
 import LoadingSkeleton from '../components/LoadingSkeleton'
+import AutoSizer from "react-virtualized-auto-sizer"
 
 const MyItems = () => {
     const { greenCollectibleContract, account, web3 } = useContext(AppContext)
@@ -63,16 +64,22 @@ const MyItems = () => {
     const renderItems = () => {
         return myItems.length > 0 ?
             <div className='flex flex-col items-center space-y-4 mb-10'>
-                <List
-                    height={450}
-                    itemCount={myItems.length}
-                    itemSize={300}
-                    itemData={myItems}
-                    layout="horizontal"
-                    width={900}
-                >
-                    {NFTCardRenderer}
-                </List>
+                <div className='w-full mb-10' style={{ height: '450px' }}>
+                    <AutoSizer>
+                        {({ height, width }) => (
+                            <List
+                                height={height}
+                                itemCount={myItems.length}
+                                itemSize={300}
+                                itemData={myItems}
+                                layout="horizontal"
+                                width={width}
+                            >
+                                {NFTCardRenderer}
+                            </List>
+                        )}
+                    </AutoSizer>
+                </div>
                 <DonationsInfo donation={donationsByAccount} />
             </div> :
             <EmptyResults />

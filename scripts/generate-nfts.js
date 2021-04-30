@@ -2,13 +2,6 @@ const GreenCollectible = artifacts.require('GreenCollectible')
 
 module.exports = async callback => {
     const accounts = await web3.eth.getAccounts()
-    console.log('Account 1 (owner): ', accounts[0])
-    console.log('Account 2 (artist): ', accounts[1])
-    console.log('Account 3 (artist): ', accounts[2])
-    console.log('Account 4 (artist): ', accounts[3])
-    console.log('Account 5 (artist): ', accounts[4])
-    console.log('Account 6 (artist): ', accounts[5])
-    console.log('Account 9 (npo): ', accounts[9])
     const greenCollectible = await GreenCollectible.deployed()
     const tx = await greenCollectible.createCollectibleAndDonate('QmT3wEioUVbiESfCRUtj8WQjgCeYpZXCwDwKRAtEVhVVfD', accounts[9],
      { from: accounts[2], value: '5000000000000000' })

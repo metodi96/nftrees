@@ -2,7 +2,7 @@ import React from 'react'
 
 const TreeSection = () => {
     return (
-        <div className='mt-24 text-center'>
+        <div className='mt-12 sm:mt-16 text-center'>
             <div className="flex flex-col space-y-4">
                 <h1 className="text-xl sm:text-4xl">Your eco-friendly NFT marketplace</h1>
                 <h2 className="text-sm sm:text-xl">By creating a NFT you are indirectly planting new trees all around the world</h2>

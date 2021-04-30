@@ -22,6 +22,10 @@ const DonationInput = (props) => {
             }
         };
         runEffect();
+        return () => {
+            //clean up
+            setEthRatesForDonation({ eth: '', usd: '' })
+        };
     }, [donation, web3.utils]);
 
     return (
