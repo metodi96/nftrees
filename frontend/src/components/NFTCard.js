@@ -19,7 +19,7 @@ const NFTCard = ({ entry }) => {
                     <h4 className="px-2 text-xs font-bold text-gray-400">{name}</h4>
                     <span className="px-2 text-xs break-words">{description.length > 60 ? `${description.substr(0, 60)}...` : description}</span>
                 </div>
-                <div className="flex items-center px-4 py-2 text-gray-700">
+                <div className="flex fixed bottom-0 items-center px-4 py-2 text-gray-700">
                     <svg width="35" height="35" xmlns="http://www.w3.org/2000/svg">
                         <g>
                             <title>Layer 1</title>

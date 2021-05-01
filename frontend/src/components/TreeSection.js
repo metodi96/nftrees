@@ -3,9 +3,9 @@ import React from 'react'
 const TreeSection = () => {
     return (
         <div className='mt-12 sm:mt-16 text-center'>
-            <div className="flex flex-col space-y-4">
-                <h1 className="text-xl sm:text-4xl">Your eco-friendly NFT marketplace</h1>
-                <h2 className="text-sm sm:text-xl">By creating a NFT you are indirectly planting new trees all around the world</h2>
+            <div className="flex flex-col space-y-4 items-center">
+                <h1 className="text-xl sm:text-4xl">Your <b className='text-green-700'>eco-friendly</b> NFT marketplace</h1>
+                <h3 className="text-sm sm:text-xl text-gray-400 sm:w-96">By creating and trading a NFT you are indirectly planting new trees all around the world</h3>
                 <div className="flex justify-center space-x-10">
                     <a href='/create' rel='noreferrer' className="bg-green-700 w-30 sm:w-40 hover:shadow-xl text-white font-bold py-3 px-4 rounded-2xl">
                         Create

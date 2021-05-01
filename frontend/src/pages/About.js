@@ -83,9 +83,7 @@ const About = () => {
                                     Where can I find the source code?
                                 </summary>
                                 <div className='py-4 px-2'>
-                                    <span>
-                                        https://github.com/metodi96/nftrees
-                                    </span>
+                                    <a className='text-blue-600 underline font-bold hover:text-gray-300' href='https://github.com/metodi96/nftrees' rel='noreferrer' target='_blank'>Here ;)</a>
                                 </div>
                             </details>
                         </div>
@@ -164,9 +162,18 @@ const About = () => {
                                 </summary>
                                 <div className='py-4 px-2'>
                                     <span>
-                                        Include an auction system where users can sell their NFTs and again part of the
+                                        1. Add a detailed section of a NFT where one could see the full details - the whole description,
+                                        the total amount of fees given to non-profit organizations through transactions with this NFT,
+                                        some more information regarding the "green" rank and of course the option to trade the NFT 
+                                        to another party.
+                                        <br />
+                                        2. Include an auction system where users can sell their NFTs and again part of the
                                         price will be redirected to a non-profit organization. The exact % has yet to be determined
                                         in the future.
+                                        <br />
+                                        3. Reward users that have donated to a non-profit organization via minting/trading a NFT with special "green" tokens
+                                        that can be used in governance decisions or bring other bonuses - e.g. the chance to participate 
+                                        in a lottery system.
                                     </span>
                                 </div>
                             </details>

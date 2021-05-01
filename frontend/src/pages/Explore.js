@@ -69,11 +69,13 @@ const Explore = () => {
             <TreeSection />
             {loading && <LoadingSkeleton />}
             {!loading && allNFTs.length > 0 && <div className='flex flex-col mt-10'>
-                <div className='border-b-2 mb-4 flex space-x-2 px-12'>
-                    <img src='art.png' alt='art' width='24' height='24' />
-                    <h3 className='text-left text-gray-400 font-bold'>Collectibles</h3>
+                <div className='px-12'>
+                    <div className='border-b-2 mb-4 flex space-x-2 pb-2'>
+                        <img src='art.png' alt='art' width='24' height='24' />
+                        <h3 className='text-left text-gray-400 font-bold'>Collectibles</h3>
+                    </div>
                 </div>
-                <div className='w-full mb-10' style={{ height: '450px', width: computeWidth(allNFTs.length) }}>
+                <div className='w-full mb-10' style={{ height: '450px' }}>
                     <AutoSizer>
                         {({ height, width }) => (
                             <List
@@ -89,8 +91,10 @@ const Explore = () => {
                         )}
                     </AutoSizer>
                 </div>
-                <DonationsInfo key={sumOfAllNFTDonations} donation={sumOfAllNFTDonations} />
+                <div className='flex justify-center'>
+                    <DonationsInfo key={sumOfAllNFTDonations} donation={sumOfAllNFTDonations} />
                 </div>
+            </div>
             }
         </div>
     )

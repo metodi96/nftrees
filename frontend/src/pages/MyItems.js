@@ -11,7 +11,7 @@ import AutoSizer from "react-virtualized-auto-sizer"
 import { computeWidth } from '../utils/autosizer'
 
 const MyItems = () => {
-    const { greenCollectibleContract, account, web3 } = useContext(AppContext)
+    const { greenCollectibleContract, account, web3, isDesktop } = useContext(AppContext)
     const [myItems, setMyItems] = useState([])
     const [loading, setLoading] = useState(true)
     const [donationsByAccount, setDonationsByAccount] = useState(0)
@@ -65,7 +65,7 @@ const MyItems = () => {
     const renderItems = () => {
         return myItems.length > 0 ?
             <div className='flex flex-col items-center space-y-4 mb-10'>
-                <div className='w-full mb-10' style={{ height: '450px', width: computeWidth(myItems.length) }}>
+                <div className='w-full mb-10' style={{ height: '450px', width: computeWidth(myItems.length, isDesktop) }}>
                     <AutoSizer>
                         {({ height, width }) => (
                             <List

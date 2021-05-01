@@ -24,6 +24,17 @@ function App({ web3 }) {
   const [screenBlocked, setScreenBlocked] = useState(false);
   const [greenCollectibleContract, setGreenCollectibleContract] = useState(undefined)
   const [reasonForBlockedScreen, setReasonForBlockedScreen] = useState('TX')
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 1450);
+
+  const updateMedia = () => {
+    setDesktop(window.innerWidth > 1280);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
+
 
   useEffect(() => {
     setInterval(() => {
@@ -94,7 +105,8 @@ function App({ web3 }) {
       hasAccountChanged,
       handleAccountChanged,
       networkId,
-      greenCollectibleContract
+      greenCollectibleContract,
+      isDesktop
     }}
     >
       <div className='cursive flex flex-col h-screen justify-between'>
