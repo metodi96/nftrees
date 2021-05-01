@@ -8,7 +8,6 @@ import { FixedSizeList as List } from 'react-window';
 import NFTCardRenderer from '../components/NFTCardRenderer'
 import LoadingSkeleton from '../components/LoadingSkeleton'
 import AutoSizer from "react-virtualized-auto-sizer"
-import { computeWidth } from '../utils/autosizer'
 
 const Explore = () => {
 
