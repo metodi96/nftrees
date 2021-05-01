@@ -8,6 +8,7 @@ import { FixedSizeList as List } from 'react-window';
 import NFTCardRenderer from '../components/NFTCardRenderer'
 import LoadingSkeleton from '../components/LoadingSkeleton'
 import AutoSizer from "react-virtualized-auto-sizer"
+import { computeWidth } from '../utils/autosizer'
 
 const Explore = () => {
 
@@ -67,12 +68,12 @@ const Explore = () => {
         <div className='flex flex-col space-y-4 mb-10'>
             <TreeSection />
             {loading && <LoadingSkeleton />}
-            {!loading && allNFTs.length > 0 && <div className='flex flex-col px-12 mt-10'>
-                <div className='border-b-2 mb-4 flex space-x-2'>
+            {!loading && allNFTs.length > 0 && <div className='flex flex-col mt-10'>
+                <div className='border-b-2 mb-4 flex space-x-2 px-12'>
                     <img src='art.png' alt='art' width='24' height='24' />
                     <h3 className='text-left text-gray-400 font-bold'>Collectibles</h3>
                 </div>
-                <div className='w-full mb-10' style={{ height: '450px' }}>
+                <div className='w-full mb-10' style={{ height: '450px', width: computeWidth(allNFTs.length) }}>
                     <AutoSizer>
                         {({ height, width }) => (
                             <List

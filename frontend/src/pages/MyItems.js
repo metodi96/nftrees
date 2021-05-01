@@ -8,6 +8,7 @@ import NFTCardRenderer from '../components/NFTCardRenderer'
 import { FixedSizeList as List } from 'react-window';
 import LoadingSkeleton from '../components/LoadingSkeleton'
 import AutoSizer from "react-virtualized-auto-sizer"
+import { computeWidth } from '../utils/autosizer'
 
 const MyItems = () => {
     const { greenCollectibleContract, account, web3 } = useContext(AppContext)
@@ -64,7 +65,7 @@ const MyItems = () => {
     const renderItems = () => {
         return myItems.length > 0 ?
             <div className='flex flex-col items-center space-y-4 mb-10'>
-                <div className='w-full mb-10' style={{ height: '450px' }}>
+                <div className='w-full mb-10' style={{ height: '450px', width: computeWidth(myItems.length) }}>
                     <AutoSizer>
                         {({ height, width }) => (
                             <List

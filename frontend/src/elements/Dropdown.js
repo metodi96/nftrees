@@ -4,9 +4,7 @@ const Dropdown = ({ chosenOrganization, pickOrganization }) => {
     const dropdownRef = useRef()
     const [open, setOpen] = useState(false)
     const nonProfitOrganizations = [
-        { name: 'One Tree Planted', address: '0x36b0bCa3ccA85e8ac16195c47735e717dD1fB47A' },
-        { name: 'Save the Earth', address: '0xb18af8525F2BF9d71f93163428274aB264412a4d' },
-        { name: 'A future for Earth', address: '0xAbF2a39ec8708420b8A573AD50E15c1617BFeeF5' }
+        { name: 'One Tree Planted', address: '0x0b4e4abAD034cC88a9e6b17e8B8d0543E3e10986' },
     ]
 
     //https://medium.com/@pitipatdop/little-neat-trick-to-capture-click-outside-with-react-hook-ba77c37c7e82

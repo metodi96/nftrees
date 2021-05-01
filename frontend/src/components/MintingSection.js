@@ -16,7 +16,7 @@ const MintingSection = () => {
     const [selectedFile, setSelectedFile] = useState({ src: '', alt: '', file: '' });
     const [donation, setDonation] = useState(0.001)
     const [chosenOrganization, setChosenOrganization] = useState(
-        { name: 'One Tree Planted', address: '0x36b0bCa3ccA85e8ac16195c47735e717dD1fB47A' }
+        { name: 'One Tree Planted', address: '0x0b4e4abAD034cC88a9e6b17e8B8d0543E3e10986' }
     )
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -87,6 +87,11 @@ const MintingSection = () => {
                 //console.log('Donation in wei: ', donationInWei)
                 const cidMetadata = await ipfs.add(JSON.stringify(metadata))
                 //console.log('You will store the value: ', cidMetadata.cid + " in the smart contract!")
+
+                console.log('metadata to be saved: ', cidMetadata.cid.toString())
+                console.log('chosen npo: ', chosenOrganization.address)
+                console.log('account to send from: ', account)
+                console.log('donation to send: ', donationInWei)
                 await greenCollectibleContract.methods.createCollectibleAndDonate(cidMetadata.cid.toString(), chosenOrganization.address).send({ from: account, gas: '2000000', value: donationInWei })
                     .on('receipt', async () => {
                         handleBlockScreen(false)

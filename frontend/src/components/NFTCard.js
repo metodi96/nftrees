@@ -17,7 +17,7 @@ const NFTCard = ({ entry }) => {
             <div>
                 <div className="flex flex-col text-left px-4 py-2 ">
                     <h4 className="px-2 text-xs font-bold text-gray-400">{name}</h4>
-                    <h4 className="px-2 text-xs">{description.length > 120 ? `${description.substr(0, 120)}...` : description}</h4>
+                    <span className="px-2 text-xs break-words">{description.length > 60 ? `${description.substr(0, 60)}...` : description}</span>
                 </div>
                 <div className="flex items-center px-4 py-2 text-gray-700">
                     <svg width="35" height="35" xmlns="http://www.w3.org/2000/svg">
@@ -44,11 +44,6 @@ const NFTCard = ({ entry }) => {
                         data-border={true}>Rank {calculateRankFor(donation, web3)}</h1>
                     <ReactTooltip className='w-40 popup' />
                 </div>
-                {/* One row for the donation made via this specific NFT
-                <div className="flex items-center mt-4 text-gray-700">
-                    <img src='tree.png' width='32' height='32' alt='description' />
-                    <h1 className="px-2 text-sm">patterson@example.com</h1>
-                    </div>*/}
             </div>
         </div>
     )
