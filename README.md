@@ -2,7 +2,7 @@
 This project is developed as a participating solution in the Gitcoin Green NFT hackathon as a Solutions Bounty: https://gitcoin.co/issue/GreenNFT/GreenNFTs/1/100025260
 Based on my idea regarding compensating the nature when minting NFTs which is explained in more detail here: https://github.com/levskarcheto96/-Awareness-Bounty-NFTrees
 
-## Demo of the [platform](https://nftrees.herokuapp.com/)
+## Description of the current functionality on the [platform](https://nftrees.herokuapp.com/)
 Below I will guide you through each of the pages of the NFTrees platform in its current state. The information below is subject to changes as the platform evolves and 
 new features are introduced:
 
@@ -26,9 +26,11 @@ NFTs.
 ### About 
 Here you can find some FAQs regarding the platform and also regarding some of the future steps which are to be made.
 
-## Blockchain part - Smart Contracts
+--------------------------------------------------------------------------------- 
+## Development
+### Blockchain part - Smart Contracts
 
-### Setup for local blockchain environment
+#### Setup for local blockchain environment
 
 Make sure to install [Truffle](https://www.trufflesuite.com/docs/truffle/getting-started/installation) and to have a local development Ethereum blockchain started (e.g. [Ganache](https://www.trufflesuite.com/docs/ganache/overview)) and also a wallet provider such as [MetaMask](https://metamask.io/) connected to that development blockchain. 
 Then you can run the following commands to deploy the smart contracts and also test them.
@@ -45,18 +47,18 @@ If at some point you would like to redeploy the contracts just run the command
 truffle migrate --reset # build and redeploy the smart contract
 ```
 
-### Learn More
+#### Learn More
 
 Check out the [Truffle documentation](https://www.trufflesuite.com/docs/truffle/overview).
 
 
-## Frontend part - React
+### Frontend part - React
 
-### Getting Started with Create React App
+#### Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Available Scripts
+#### Available Scripts
 
 In the project's frontend directory, you can run:
 
@@ -69,7 +71,7 @@ Then:
 npm start     # Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ```
 
-### Learn More
+#### Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
