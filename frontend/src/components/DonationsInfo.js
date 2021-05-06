@@ -11,7 +11,6 @@ const DonationsInfo = ({ donation }) => {
         const runEffect = async () => {
             try {
                 console.log('Fetching...')
-                console.log('Donations DonationsInfo: ', donation)
                 await fetchConversionRate();
                 setEthRatesForDonation(getEthRates(parseFloat(convertToTokens(donation.toString(), web3))));
             } catch (err) {
@@ -32,7 +31,7 @@ const DonationsInfo = ({ donation }) => {
                 <span className='font-bold text-xl sm:text-3xl md:text-4xl text-green-700'>Ξ{convertToTokens(donation.toString(), web3)}</span>
             </div>
             <div className='flex p-4 border rounded-md items-center space-x-4 w-full'>
-                <span>Total trees planted:</span>
+                <span>Total trees planted (<span className='lowercase'>$1/tree</span>):</span>
                 <div className='flex space-x-2'>
                     <span className='font-bold text-xl sm:text-3xl md:text-4xl text-green-700'>{Math.floor(ethRatesForDonation.usd)}</span>
                     <div className='w-5 h-5 sm:w-10 sm:h-10'><img src='tree.png' alt='tree' /></div>
