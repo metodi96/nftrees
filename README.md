@@ -37,7 +37,7 @@ Then you can run the following commands to deploy the smart contracts and also t
 
 ```PS
 npm install     # install dependencies such as truffle-assertions and @openzeppelin/contracts
-truffle migrate # build and deploy the smart contract LightsaberAuction - since it inherits from the LightsaberForge we do not need to deploy the other one
+truffle migrate # build and deploy the smart contract GreenCollectible.sol
 truffle test    # run the tests
 ```
 
