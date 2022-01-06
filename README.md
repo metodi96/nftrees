@@ -1,6 +1,6 @@
 #  [Solutions Bounty] NFTrees
 This project is developed as a participating solution in the Gitcoin Green NFT hackathon as a Solutions Bounty: https://gitcoin.co/issue/GreenNFT/GreenNFTs/1/100025260
-Based on my idea regarding compensating the nature when minting NFTs which is explained in more detail here: https://github.com/levskarcheto96/-Awareness-Bounty-NFTrees
+Based on my idea regarding compensating the nature when minting NFTs.
 
 ## Description of the current functionality on the [platform](https://nftrees.herokuapp.com/)
 Below I will guide you through each of the pages of the NFTrees platform in its current state. The information below is subject to changes as the platform evolves and 
